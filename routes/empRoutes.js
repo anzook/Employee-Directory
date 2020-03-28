@@ -1,4 +1,4 @@
-const empController = require('../controllers/userController');
+const empController = require('../controllers/empController');
 
 module.exports = function (app) {
 
