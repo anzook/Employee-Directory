@@ -20,22 +20,12 @@ module.exports = {
     },
     findAll: async ({ body }, res) => {
         const sort = body.sort || 'id';
-        const param = body.param || '';
-        let whereObj = {};
-        if ( param) {
-           if ( param === 'permanent' || param === 'temporary' || param ===  'intern' || param === 'contract') {
-            whereObj = {
-                status: param
-            }
-           } 
-           if ( param === 'management' || param === 'engineering' || param ===  'marketing' || param === 'sales' || param ===  'internal services' || param === 'customer service') {
-            whereObj = {
-                department: param
-            }
-           }
-        } 
+        let whereCase = {};
+        body.statusParam ? whereCase.status = body.statusParam : '';
+        body.departmentParam ? whereCase.department = body.departmentParam : '';
+
         const employees = await db.employee.findAll({
-        whereObj,
+        where: whereCase,
       order: [
         [sort, 'ASC'],
     ],
