@@ -4,7 +4,7 @@ import "./style.css";
 function Footer() {
   return (
     <footer className="footer">
-      <span>Pupster 2017</span>
+      <span>Employee Roster | ANZ 2020</span>
     </footer>
   );
 }
