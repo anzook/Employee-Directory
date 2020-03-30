@@ -18,5 +18,8 @@ export default {
   deleteEmployee: function(empID) {
     return axios.delete("/api/employee/" + empID);
   },
+  searchEmployees: function(query) {
+    return axios.get("/api/employee/search/", query)
+  },
 
 };

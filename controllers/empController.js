@@ -1,4 +1,6 @@
 const db = require('../models');
+const { Op } = require("sequelize");
+
 
 module.exports = {
     create: async (req, res) => {
@@ -28,6 +30,24 @@ module.exports = {
         where: whereCase,
       order: [
         [sort, 'ASC'],
+    ],
+        }).catch(err => {
+            console.log(err);
+        })
+
+        res.json(employees);
+    },
+    search: async ({ body }, res) => {
+        const searchQuery = body.query || '';
+        const employees = await db.employee.findAll({
+            where: {
+                [Op.or]: [
+                    { firstName: { [Op.like]: '%' + searchQuery + '%' } },
+                    { lastName:{ [Op.like]: '%' + searchQuery + '%' } }
+                  ]
+              },
+      order: [
+        ["lastName", 'ASC'],
     ],
         }).catch(err => {
             console.log(err);
