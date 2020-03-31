@@ -3,8 +3,9 @@ import axios from "axios";
 // Export an object containing methods we'll use for accessing the Dog.Ceo API
 
 export default {
-  getEmployees: function(params) {
-    return axios.get("/api/employee", params);
+  getEmployees: function(data) {
+     let sortParam = data.sortParam
+    return axios.get("/api/employee?sort=" + sortParam +"&statusFilter=" + data.statusFilter + "&departmentFilter=" + data.departmentFilter);
   },
   createEmployee: function(data) {
     return axios.post("/api/employee", data);

@@ -20,11 +20,14 @@ module.exports = {
         })
         res.json(employee);
     },
-    findAll: async ({ body }, res) => {
-        const sort = body.sort || 'id';
+    findAll: async (req, res) => {
+        console.log(req.query);
+        const sort = req.query.sort || 'id';
+        const statusFilter = req.query.statusFilter || '';
+        const departmentFilter = req.query.departmentFilter || '';
         let whereCase = {};
-        body.statusParam ? whereCase.status = body.statusParam : '';
-        body.departmentParam ? whereCase.department = body.departmentParam : '';
+        statusFilter ? whereCase.status = statusFilter : '';
+        departmentFilter ? whereCase.department = departmentFilter : '';
 
         const employees = await db.employee.findAll({
         where: whereCase,
