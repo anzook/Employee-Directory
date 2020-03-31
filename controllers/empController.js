@@ -37,8 +37,9 @@ module.exports = {
 
         res.json(employees);
     },
-    search: async ({ body }, res) => {
-        const searchQuery = body.query || '';
+    search: async (req, res) => {
+        console.log(req.query);
+        const searchQuery = req.query.query || '';
         const employees = await db.employee.findAll({
             where: {
                 [Op.or]: [

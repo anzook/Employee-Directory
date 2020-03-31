@@ -19,7 +19,8 @@ export default {
     return axios.delete("/api/employee/" + empID);
   },
   searchEmployees: function(query) {
-    return axios.get("/api/employee/search/", query)
+    let params = {query}
+    return axios.get("/api/employee/search", {params});
   },
 
 };

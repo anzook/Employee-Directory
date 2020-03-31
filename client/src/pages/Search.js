@@ -8,23 +8,14 @@ import Alert from "../components/Alert";
 class Search extends Component {
   state = {
     search: "",
-    departments:         [
-      "management",
-      "engineering",
-      "marketing",
-      "sales",
-      "customer service",
-      "internal services"
-    ],
     results: [],
     error: ""
   };
 
-  // When the component mounts, get a list of all available base breeds and update this.state.breeds
   componentDidMount() {
-    API.getEmployees()
-      .then(res => this.setState({ results: res.data }))
-      .catch(err => console.log(err));
+    // API.getEmployees()
+    //   .then(res => this.setState({ results: res.data }))
+    //   .catch(err => console.log(err));
   }
 
   handleInputChange = event => {
@@ -33,15 +24,17 @@ class Search extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-    API.getEmployees(this.state.search)
+    API.searchEmployees(this.state.search)
       .then(res => {
         if (res.data.status === "error") {
           throw new Error(res.data.message);
         }
-        this.setState({ results: res.data.message, error: "" });
+        console.log("Searched: ", this.state.search, "res: ", res.data)
+        this.setState({ results: res.data, error: "" });
       })
       .catch(err => this.setState({ error: err.message }));
   };
+
   render() {
     return (
       <div>
@@ -56,7 +49,6 @@ class Search extends Component {
           <SearchForm
             handleFormSubmit={this.handleFormSubmit}
             handleInputChange={this.handleInputChange}
-            departments={this.state.departments}
           />
           <SearchResults results={this.state.results} />
         </Container>
