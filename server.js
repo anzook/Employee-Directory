@@ -22,12 +22,13 @@ if (process.env.NODE_ENV === "production") {
 // require('./src/routes/html-routes.js')(app);
 require('./routes/empRoutes.js')(app, db);
 
-const mysql = require('mysql');
-let connection;
+// const mysql = require('mysql');
+// let connection;
 
-if ( process.env.JAWSDB_URL) {
-  connection = mysql.createConnection(process.env.JAWSDB_URL);
-} else {
+// if ( process.env.JAWSDB_URL) {
+//   connection = mysql.createConnection(process.env.JAWSDB_URL);
+// } 
+
   // Connect to the Database
 // Sync db and then Start the API server
 db.sequelize.sync({ force: false }).then(function() {
@@ -35,7 +36,3 @@ db.sequelize.sync({ force: false }).then(function() {
     console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
   });
 });
-}
-
-
-

@@ -7,6 +7,7 @@ const config = {
     'host': '127.0.0.1',
     'dialect': 'mysql',
     'operatorsAliases': false,
+    // 'use_env_variable': 'JAWSDB_URL',
   },
   'test': {
     'username': 'root',
