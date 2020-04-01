@@ -22,12 +22,20 @@ if (process.env.NODE_ENV === "production") {
 // require('./src/routes/html-routes.js')(app);
 require('./routes/empRoutes.js')(app, db);
 
+const mysql = require('mysql');
+let connection;
 
-
-// Connect to the Database
+if ( process.env.JAWSDB_URL) {
+  connection = mysql.createConnection(process.env.JAWSDB_URL);
+} else {
+  // Connect to the Database
 // Sync db and then Start the API server
 db.sequelize.sync({ force: false }).then(function() {
   app.listen(PORT, function() {
     console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
   });
 });
+}
+
+
+
