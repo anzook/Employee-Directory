@@ -9,15 +9,25 @@ import API from "../utils/API";
 class About extends Component {
   state = {
     sort: "name",
-    statusFilter: "permanent",
-    departmentFilter: "management",
+    statusFilter: "",
+    departmentFilter: "",
     results: []
   };
 
   componentDidMount() {
-    // API.getEmployees()
-    //   .then(res => this.setState({ results: res.data }))
-    //   .catch(err => console.log(err));
+    let params = {
+      statusFilter: this.state.statusFilter,
+      departmentFilter: this.state.departmentFilter
+    }
+    API.getEmployees(params)
+      .then(res => {
+        if (res.data.status === "error") {
+          throw new Error(res.data.message);
+        }
+        console.log("Searched: ", this.state, "res: ", res.data);
+        this.setState({ results: res.data, error: "" });
+      })
+      .catch(err => this.setState({ error: err.message }));
   }
 
   handleSortChange = event => {
@@ -35,7 +45,6 @@ class About extends Component {
   handleSubmit = event => {
     event.preventDefault();
     let params = {
-      sort: this.state.sort,
       statusFilter: this.state.statusFilter,
       departmentFilter: this.state.departmentFilter
     }
@@ -81,6 +90,7 @@ class About extends Component {
                     </label>
                   </div>
                   <select className="custom-select" id="deptDropdown" onChange={this.handleDepartmentFilterChange} value={this.state.departmentFilter}>
+                  <option value="">Any</option>
                     <option value="management">Management</option>
                     <option value="marketing">Marketing</option>
                     <option value="sales">Sales</option>
@@ -94,6 +104,7 @@ class About extends Component {
                     </label>
                   </div>
                   <select className="custom-select" id="statusDropdown" onChange={this.handleStatusFilterChange} value={this.state.statusFilter}>
+                  <option value="">Any</option>
                     <option value="permanent">Permanent</option>
                     <option value="intern">Intern</option>
                     <option value="contract">Contract</option>

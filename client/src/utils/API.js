@@ -4,8 +4,7 @@ import axios from "axios";
 
 export default {
   getEmployees: function(data) {
-     let sortParam = data.sortParam
-    return axios.get("/api/employee?sort=" + sortParam +"&statusFilter=" + data.statusFilter + "&departmentFilter=" + data.departmentFilter);
+    return axios.get("/api/employee?statusFilter=" + data.statusFilter + "&departmentFilter=" + data.departmentFilter);
   },
   createEmployee: function(data) {
     return axios.post("/api/employee", data);

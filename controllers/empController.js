@@ -22,7 +22,6 @@ module.exports = {
     },
     findAll: async (req, res) => {
         console.log(req.query);
-        const sort = req.query.sort || 'id';
         const statusFilter = req.query.statusFilter || '';
         const departmentFilter = req.query.departmentFilter || '';
         let whereCase = {};
@@ -31,9 +30,6 @@ module.exports = {
 
         const employees = await db.employee.findAll({
         where: whereCase,
-      order: [
-        [sort, 'ASC'],
-    ],
         }).catch(err => {
             console.log(err);
         })
