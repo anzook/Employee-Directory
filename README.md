@@ -22,8 +22,7 @@ Here is an example of the front end application view/home page:
 You can also search employees:
 ![Search screen Demo](Assets/Search_SS.png)
 
-And add employees to the database to search/sort:
-![Add employees Demo](Assets/Add_emp_SS.png)
+And add employees as well.
 
 All website assets are contained within the repo (https://github.com/anzook/Employee-Directory)
 
