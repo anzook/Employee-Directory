@@ -1,6 +1,7 @@
 <!-- //////////////////////////// -->
 # Unit 19 React Homework: Employee Directory
 ### An employee directory with React
+Deployed link: https://anz-employee-directory.herokuapp.com/
 
 This was my first exercise and practie working with react, responding to user input and updating state. It allows for a user to explore an employee roster through filtering, sorting, and searching.
 
