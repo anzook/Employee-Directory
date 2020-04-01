@@ -4,7 +4,11 @@ import axios from "axios";
 
 export default {
   getEmployees: function(data) {
-    return axios.get("/api/employee?statusFilter=" + data.statusFilter + "&departmentFilter=" + data.departmentFilter);
+    if (!data) {
+      return axios.get("/api/employee")
+    } else {
+      return axios.get("/api/employee?statusFilter=" + data.statusFilter + "&departmentFilter=" + data.departmentFilter);
+    }
   },
   createEmployee: function(data) {
     return axios.post("/api/employee", data);

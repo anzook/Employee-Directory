@@ -21,7 +21,7 @@ module.exports = {
         res.json(employee);
     },
     findAll: async (req, res) => {
-        console.log(req.query);
+        // console.log(req.query);
         const statusFilter = req.query.statusFilter || '';
         const departmentFilter = req.query.departmentFilter || '';
         let whereCase = {};

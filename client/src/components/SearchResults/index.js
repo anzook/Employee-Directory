@@ -10,6 +10,7 @@ function SearchResults(props) {
           <th scope="col">Name</th>
           <th scope="col">Title</th>
           <th scope="col">Department</th>
+          <th scope="col">Status</th>
           <th scope="col">Phone</th>
           <th scope="col">Email</th>
         </tr>
@@ -23,6 +24,7 @@ function SearchResults(props) {
             </th>
             <td> {result.title} </td>
             <td> {result.department} </td>
+            <td> {result.status} </td>
             <td> {result.phone} </td>
             <td> {result.email} </td>
           </tr>

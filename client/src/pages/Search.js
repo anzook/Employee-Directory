@@ -13,9 +13,9 @@ class Search extends Component {
   };
 
   componentDidMount() {
-    // API.getEmployees()
-    //   .then(res => this.setState({ results: res.data }))
-    //   .catch(err => console.log(err));
+    API.getEmployees()
+      .then(res => this.setState({ results: res.data }))
+      .catch(err => console.log(err));
   }
 
   handleInputChange = event => {

@@ -5,27 +5,30 @@ import Row from "../components/Row";
 import Col from "../components/Col";
 import SearchResults from "../components/SearchResults";
 import API from "../utils/API";
+import Alert from "../components/Alert";
+
 
 class About extends Component {
   state = {
     sort: "name",
     statusFilter: "",
     departmentFilter: "",
-    results: []
+    results: [],
+    employeeList: [],
+    error: ""
   };
 
   componentDidMount() {
-    let params = {
-      statusFilter: this.state.statusFilter,
-      departmentFilter: this.state.departmentFilter
-    }
-    API.getEmployees(params)
+    API.getEmployees()
       .then(res => {
         if (res.data.status === "error") {
           throw new Error(res.data.message);
         }
         console.log("Searched: ", this.state, "res: ", res.data);
-        this.setState({ results: res.data, error: "" });
+        this.setState({ 
+          results: res.data, 
+          error: "",
+        employeeList: res.data });
       })
       .catch(err => this.setState({ error: err.message }));
   }
@@ -34,13 +37,51 @@ class About extends Component {
     this.setState({ sort: event.target.value });
   };
 
+// handleFilterChange = event => {
+//   this.setState({ filter: event.target.value}, () => {
+//     this.filterResults()
+//   })
+// }
+
   handleStatusFilterChange = event => {
-    this.setState({ statusFilter: event.target.value });
+    this.setState({ statusFilter: event.target.value }, () => {
+          this.filterResults()
+        })
   };
 
   handleDepartmentFilterChange = event => {
-    this.setState({ departmentFilter: event.target.value });
+    this.setState({ departmentFilter: event.target.value }, () => {
+      this.filterResults()
+    })
   };
+
+  // sortResults = (sort) => {
+  //   let 
+  // }
+
+filterResults = () => {
+  let filteredEmployees = []
+  if (this.state.statusFilter || this.state.departmentFilter) {
+    this.state.employeeList.forEach( employee => {
+      if (!this.state.statusFilter){
+        if (employee.department === this.state.departmentFilter) {
+          filteredEmployees.push(employee)
+        }
+      } else if ( !this.state.departmentFilter) {
+        if (employee.status === this.state.statusFilter) {
+          filteredEmployees.push(employee)
+        }
+      } else {
+        if (employee.department === this.state.departmentFilter && employee.status === this.state.statusFilter) {
+          filteredEmployees.push(employee)
+        }
+      }
+    })
+    this.setState({ results: filteredEmployees}) 
+  } else {
+    this.setState({ results: this.state.employeeList}) 
+  }
+}
 
   handleSubmit = event => {
     event.preventDefault();
@@ -81,7 +122,12 @@ class About extends Component {
                 Created using React with a Sequelize backend, this is a demo of
                 a basic interactive application.
               </p>
-
+            <Alert
+            type="danger"
+            style={{ opacity: this.state.error ? 1 : 0, marginBottom: 10 }}
+          >
+            {this.state.error}
+          </Alert>
               <div className="search">
                 <div className="input-group mb-3">
                   <div className="input-group-prepend">
@@ -89,7 +135,7 @@ class About extends Component {
                       Department:
                     </label>
                   </div>
-                  <select className="custom-select" id="deptDropdown" onChange={this.handleDepartmentFilterChange} value={this.state.departmentFilter}>
+                  <select className="custom-select" id="deptDropdown" onChange={this.handleDepartmentFilterChange}>
                   <option value="">Any</option>
                     <option value="management">Management</option>
                     <option value="marketing">Marketing</option>
@@ -103,7 +149,7 @@ class About extends Component {
                       Status:
                     </label>
                   </div>
-                  <select className="custom-select" id="statusDropdown" onChange={this.handleStatusFilterChange} value={this.state.statusFilter}>
+                  <select className="custom-select" id="statusDropdown" onChange={this.handleStatusFilterChange} >
                   <option value="">Any</option>
                     <option value="permanent">Permanent</option>
                     <option value="intern">Intern</option>
@@ -151,13 +197,13 @@ class About extends Component {
               </div>
                 </div>
                 <div className="row justify-content-end">
-                <button
+                {/* <button
                   type="submit"
                   onClick={this.handleSubmit}
                   className="btn btn-success"
                 >
                   Show Employees
-                </button>
+                </button> */}
                 </div>
                 <hr/>
               </div>
