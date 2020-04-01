@@ -29,7 +29,6 @@ class Search extends Component {
         if (res.data.status === "error") {
           throw new Error(res.data.message);
         }
-        console.log("Searched: ", this.state.search, "res: ", res.data)
         this.setState({ results: res.data, error: "" });
       })
       .catch(err => this.setState({ error: err.message }));

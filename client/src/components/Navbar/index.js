@@ -20,7 +20,7 @@ function Navbar() {
                   : "nav-link"
               }
             >
-              About
+              View
             </Link>
           </li>
           <li className="nav-item">

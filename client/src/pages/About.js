@@ -34,14 +34,11 @@ class About extends Component {
   }
 
   handleSortChange = event => {
-    this.setState({ sort: event.target.value });
+    this.setState({ sort: event.target.value }, () => {
+      this.sortResults();
+    });
   };
 
-// handleFilterChange = event => {
-//   this.setState({ filter: event.target.value}, () => {
-//     this.filterResults()
-//   })
-// }
 
   handleStatusFilterChange = event => {
     this.setState({ statusFilter: event.target.value }, () => {
@@ -55,9 +52,38 @@ class About extends Component {
     })
   };
 
-  // sortResults = (sort) => {
-  //   let 
-  // }
+  // probably a more elegant way to handle this...
+  sortResults = () => {
+    const sortValue = this.state.sort
+    let compare = (a, b) => {
+      if (sortValue === 'department') {
+        if ( a.department < b.department ){
+          return -1;
+        }
+        if ( a.department > b.department ){
+          return 1;
+        }
+        return 0;
+            } else if (sortValue === 'status') {
+        if ( a.status < b.status ){
+          return -1;
+        }
+        if ( a.status > b.status ){
+          return 1;
+        }
+        return 0;
+      } else {
+        if ( a.lastName < b.lastName ){
+          return -1;
+        }
+        if ( a.lastName > b.lastName ){
+          return 1;
+        }
+        return 0;
+      }
+    }
+    this.setState({ results: this.state.results.sort( compare ) });
+  }
 
 filterResults = () => {
   let filteredEmployees = []
